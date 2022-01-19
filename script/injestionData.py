@@ -21,7 +21,7 @@ tickers = [
 fs = s3fs.S3FileSystem(key=config.aws_access_key_id, secret=config.aws_secret_access_key)
 for ticker in tickers:
   url = 'https://query1.finance.yahoo.com/v8/finance/chart/' + ticker + '?interval=1m'
-  df_cot = pd.read_csv(url)
+  df_cot = pd.read_json(url)
   df = pd.DataFrame(df_cot)
 
   bytes_to_write = df.to_csv(None).encode()
