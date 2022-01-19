@@ -25,5 +25,5 @@ for ticker in tickers:
   df = pd.DataFrame(df_cot)
 
   bytes_to_write = df.to_csv(None).encode()
-  with fs.open(f's3://yahoofinances-demo/inbound/{datetime.now().year}/{datetime.now().month}/{datetime.now().day}/finances_{ticker}_{datetime.now()}.csv', 'wb') as f:
+  with fs.open(f's3://yahoofinances-demo/inbound/{datetime.now().year}/{datetime.now().month}/{datetime.now().day}/{datetime.now().hour}/finances_{ticker}_{datetime.now()}.csv', 'wb') as f:
     f.write(bytes_to_write)
