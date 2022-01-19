@@ -3,6 +3,8 @@ import config
 import boto3 as boto3
 import s3fs
 from datetime import datetime
+from urllib.request import urlopen
+import json
 
 tickers = [
   'KLBN11.SA',
@@ -17,13 +19,18 @@ tickers = [
   'USIM5.SA',
   '^BVSP'
 ]
-
+  
 fs = s3fs.S3FileSystem(key=config.aws_access_key_id, secret=config.aws_secret_access_key)
 for ticker in tickers:
   url = 'https://query1.finance.yahoo.com/v8/finance/chart/' + ticker + '?interval=1h'
-  df_cot = pd.read_json(url)
-  df = pd.DataFrame(df_cot)
+  response = urlopen(url)
+  data_json = json.loads(response.read())
+  data_timestamp = data_json['chart']['result'][0]['timestamp']
+  data_json = data_json['chart']['result'][0]['indicators']['quote']
+  df = pd.DataFrame.from_dict(data_json[0])
+  df['timestamp'] = data_timestamp
+  df.drop(['volume'], axis=1, inplace=True)
 
-  bytes_to_write = df.to_csv(None).encode()
-  with fs.open(f's3://yahoofinances-demo/inbound/{datetime.now().year}/{datetime.now().month}/{datetime.now().day}/{datetime.now().hour}/finances_{ticker}_{datetime.now()}.csv', 'wb') as f:
+  bytes_to_write = df.to_csv(None, index=False).encode()
+  with fs.open(f's3://yahoofinances-demo/inbound/{datetime.now().year}/{datetime.now().month}/{datetime.now().day}/{datetime.now().hour}/finances_{ticker}_{datetime.now().hour}:{datetime.now().minute}.csv', 'wb') as f:
     f.write(bytes_to_write)
