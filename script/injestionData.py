@@ -1,6 +1,8 @@
 import pandas as pd
 import config
 import boto3 as boto3
+import s3fs
+from datetime import datetime
 
 tickers = [
   'KLBN11.SA',
@@ -16,15 +18,12 @@ tickers = [
   '^BVSP'
 ]
 
-session = boto3.Session(aws_access_key_id=config.aws_access_key_id, aws_secret_access_key=config.aws_secret_access_key)
-s3 = session.resource('s3')
-
+fs = s3fs.S3FileSystem(key=config.aws_access_key_id, secret=config.aws_secret_access_key)
 for ticker in tickers:
-  start = pd.to_datetime(['2007-01-01']).astype(int)[0]//10**9 # convert to unix timestamp.
-  end = pd.to_datetime(['2020-12-31']).astype(int)[0]//10**9 # convert to unix timestamp.
-  url = 'https://query1.finance.yahoo.com/v7/finance/download/' + ticker + '?period1=' + str(start) + '&period2=' + str(end) + '&interval=1d&events=history'
+  url = 'https://query1.finance.yahoo.com/v8/finance/chart/' + ticker + '?interval=1m'
   df_cot = pd.read_csv(url)
+  df = pd.DataFrame(df_cot)
 
-  df_cot.to_csv(f'finances_{ticker}_{start}_{end}.csv')
-
-# s3.Bucket('yahoofinances-demo').upload_file(f'finances_{ticker}_{start}_{end}.csv', f'finances_{ticker}_{start}_{end}.csv')
+  bytes_to_write = df.to_csv(None).encode()
+  with fs.open(f's3://yahoofinances-demo/inbound/{datetime.now().year}/{datetime.now().month}/{datetime.now().day}/finances_{ticker}_{datetime.now()}.csv', 'wb') as f:
+    f.write(bytes_to_write)
