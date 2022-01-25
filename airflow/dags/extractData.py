@@ -13,7 +13,8 @@ default_args = {
   'email': ['otavio.faria@alphabot.com.br'],
   'email_on_failure': True,
   'email_on_retry': False,
-  'retries': 3
+  'retries': 3,
+  'retry_delay': timedelta(minutes=0.1)
 }
 # [END default_args]
 
@@ -21,7 +22,7 @@ default_args = {
 dag = DAG(
   'extract-data',
   default_args=default_args,
-  start_date=datetime(2021, 3, 18),
+  start_date=datetime(2022, 1, 25),
   schedule_interval='@weekly',
   tags=['extract', 'inbound', 'S3']
 )
