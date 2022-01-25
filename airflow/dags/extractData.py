@@ -32,11 +32,11 @@ def get_data_yahoo_finances():
   import pandas as pd
   import boto3
   from urllib.request import urlopen
-  import os
+  from airflow.models import Variable
 
   # [START env_variables]
-  ACCESS_KEY = os.getenv("ACCESS_KEY", "YOURACCESSKEY")
-  SECRET_ACCESS = os.getenv("SECRET_KEY", "YOURSECRETKEY")
+  ACCESS_KEY = Variable.get("ACCESS_KEY")
+  SECRET_ACCESS = Variable.get("SECRET_KEY")
   # [END env_variables]
 
   tickers = [
