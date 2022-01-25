@@ -2,8 +2,8 @@
 from airflow.models import DAG
 from datetime import datetime, timedelta
 from airflow.operators.bash import BashOperator
-import boto3 as boto3
-import s3fs
+import pandas as pd
+
 # [END import_module]
 
 # [START default_args]
