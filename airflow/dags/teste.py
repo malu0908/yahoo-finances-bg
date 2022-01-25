@@ -3,6 +3,8 @@ from airflow.models import DAG
 from datetime import datetime, timedelta
 from airflow.operators.bash import BashOperator
 import pandas as pd
+from urllib.request import urlopen
+import json
 
 # [END import_module]
 
