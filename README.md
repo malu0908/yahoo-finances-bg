@@ -12,13 +12,13 @@ Use case for an ELT data pipeline, where data is pulled from the asset informati
 
 ## Important commands
 
-Install airflow on kubernetes with values.yaml
-```
-helm install flower -n airflow bitnami/airflow --values values.yaml
-```
-
-Create configMap to requirements.txt
+Create configMap from requirements.txt
 
 ```
 kubectl create -n airflow configmap requirements --from-file=requirements.txt
+```
+
+Install airflow on kubernetes with values.yaml
+```
+helm install flower -n airflow bitnami/airflow --values values.yaml
 ```
