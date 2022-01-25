@@ -1,7 +1,6 @@
 # [START import_module]
 from airflow.models import DAG
 import pandas as pd
-import config
 import boto3
 from datetime import datetime
 from urllib.request import urlopen
