@@ -6,6 +6,7 @@ from datetime import datetime
 from urllib.request import urlopen
 import os
 from airflow.operators.python_operator import PythonOperator
+from datetime import timedelta
 # [END import_module]
 
 # [START default_args]
@@ -15,7 +16,8 @@ default_args = {
   'email': ['otavio.faria@alphabot.com.br'],
   'email_on_failure': True,
   'email_on_retry': False,
-  'retries': 3
+  'retries': 3,
+  'retry_delay': timedelta(minutes=5)
 }
 # [END default_args]
 
@@ -74,5 +76,5 @@ extract_data_yahoo_finances = PythonOperator(
 	python_callable=get_data_yahoo_finances,
 	dag=dag
 )
-	
+
 [extract_data_yahoo_finances]
