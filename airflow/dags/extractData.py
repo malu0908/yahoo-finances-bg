@@ -13,8 +13,7 @@ default_args = {
   'email': ['otavio.faria@alphabot.com.br'],
   'email_on_failure': True,
   'email_on_retry': False,
-  'retries': 3,
-  'retry_delay': timedelta(minutes=5)
+  'retries': 3
 }
 # [END default_args]
 
