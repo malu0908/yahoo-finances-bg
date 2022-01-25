@@ -1,10 +1,5 @@
 # [START import_module]
 from airflow.models import DAG
-import pandas as pd
-import boto3
-from datetime import datetime
-from urllib.request import urlopen
-import os
 from airflow.operators.python_operator import PythonOperator
 from datetime import timedelta
 # [END import_module]
@@ -21,11 +16,6 @@ default_args = {
 }
 # [END default_args]
 
-# [START env_variables]
-ACCESS_KEY = os.getenv("ACCESS_KEY", "YOURACCESSKEY")
-SECRET_ACCESS = os.getenv("SECRET_KEY", "YOURSECRETKEY")
-# [END env_variables]
-
 # [START instantiate_dag]
 dag = DAG(
   'extract-data',
@@ -38,6 +28,17 @@ dag = DAG(
 
 # [START functions]
 def get_data_yahoo_finances():
+  import pandas as pd
+  import boto3
+  from datetime import datetime
+  from urllib.request import urlopen
+  import os
+
+  # [START env_variables]
+  ACCESS_KEY = os.getenv("ACCESS_KEY", "YOURACCESSKEY")
+  SECRET_ACCESS = os.getenv("SECRET_KEY", "YOURSECRETKEY")
+  # [END env_variables]
+
 	tickers = [
 	  'AAPL',
 		'VALE',
