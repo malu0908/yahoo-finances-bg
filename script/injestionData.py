@@ -10,11 +10,6 @@ tickers = [
   'VALE',
 ]
 
-#Creating Session With Boto3.
-session = boto3.Session(
-  aws_access_key_id=config.aws_access_key_id,
-  aws_secret_access_key=config.aws_secret_access_key
-)
 s3 = boto3.resource( 's3', aws_access_key_id=config.aws_access_key_id, aws_secret_access_key=config.aws_secret_access_key)
 bucket_name = "yahoo-finances-bg"
 
