@@ -4,6 +4,7 @@ import pandas as pd
 import boto3
 from datetime import datetime
 from urllib.request import urlopen
+import os
 # [END import_module]
 
 # [START default_args]
@@ -18,8 +19,8 @@ default_args = {
 # [END default_args]
 
 # [START env_variables]
-ACCESS_KEY = getenv("ACCESS_KEY", "YOURACCESSKEY")
-SECRET_ACCESS = getenv("SECRET_KEY", "YOURSECRETKEY")
+ACCESS_KEY = os.getenv("ACCESS_KEY", "YOURACCESSKEY")
+SECRET_ACCESS = os.getenv("SECRET_KEY", "YOURSECRETKEY")
 # [END env_variables]
 
 # [START instantiate_dag]
