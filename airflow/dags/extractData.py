@@ -2,6 +2,7 @@
 from airflow.models import DAG
 from airflow.operators.python_operator import PythonOperator
 from datetime import timedelta
+from datetime import datetime
 # [END import_module]
 
 # [START default_args]
@@ -30,7 +31,6 @@ dag = DAG(
 def get_data_yahoo_finances():
   import pandas as pd
   import boto3
-  from datetime import datetime
   from urllib.request import urlopen
   import os
 
