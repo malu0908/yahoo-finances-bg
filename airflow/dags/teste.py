@@ -5,7 +5,7 @@ from airflow.operators.bash import BashOperator
 import pandas as pd
 from urllib.request import urlopen
 import json
-import s3fs
+import boto3
 
 # [END import_module]
 
