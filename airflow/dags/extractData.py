@@ -34,6 +34,7 @@ def get_data_yahoo_finances():
   import boto3
   from urllib.request import urlopen
   from airflow.models import Variable
+  import json
 
   # [START env_variables]
   ACCESS_KEY = Variable.get("ACCESS_KEY")
