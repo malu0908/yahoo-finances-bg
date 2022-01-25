@@ -1,25 +1,23 @@
 import pandas as pd
 import config
-import s3fs
+import boto3
 from datetime import datetime
 from urllib.request import urlopen
 import json
 
 tickers = [
-  'KLBN11.SA',
-  'RENT3.SA',
-  'EQTL3.SA',
-  'ECOR3.SA',
-  'BRML3.SA',
-  'SANB11.SA',
-  'LREN3.SA',
-  'MULT3.SA',
-  'GOAU4.SA',
-  'USIM5.SA',
-  '^BVSP'
+  'AAPL',
+  'VALE',
 ]
-  
-fs = s3fs.S3FileSystem(key=config.aws_access_key_id, secret=config.aws_secret_access_key)
+
+#Creating Session With Boto3.
+session = boto3.Session(
+  aws_access_key_id=config.aws_access_key_id,
+  aws_secret_access_key=config.aws_secret_access_key
+)
+s3 = boto3.resource( 's3', aws_access_key_id=config.aws_access_key_id, aws_secret_access_key=config.aws_secret_access_key)
+bucket_name = "yahoo-finances-bg"
+
 for ticker in tickers:
   url = 'https://query1.finance.yahoo.com/v8/finance/chart/' + ticker + '?interval=1h'
   response = urlopen(url)
@@ -35,5 +33,5 @@ for ticker in tickers:
   df['day'] = datetime.now().day
 
   bytes_to_write = df.to_csv(None, index=False).encode()
-  with fs.open(f's3://yahoofinances-demo/inbound/{datetime.now().year}/{datetime.now().month}/{ticker}/finances_{ticker}_{datetime.now().day}.csv', 'wb') as f:
-    f.write(bytes_to_write)
+  folder_name = f'inbound/{datetime.now().year}/{datetime.now().month}/{ticker}'
+  s3.Object(bucket_name=bucket_name, key=f'{folder_name}/finances_{ticker}_{datetime.now().day}.csv').put(Body=bytes_to_write)
