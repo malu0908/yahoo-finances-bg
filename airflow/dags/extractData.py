@@ -23,7 +23,7 @@ dag = DAG(
   'extract-data',
   default_args=default_args,
   start_date=datetime(2022, 1, 24),
-  schedule_interval='@day',
+  schedule_interval='@weekly',
   tags=['extract', 'inbound', 'S3']
 )
 # [END instantiate_dag]
@@ -78,3 +78,5 @@ extract_data_yahoo_finances = PythonOperator(
   python_callable=get_data_yahoo_finances,
   dag=dag
 )
+
+extract_data_yahoo_finances
