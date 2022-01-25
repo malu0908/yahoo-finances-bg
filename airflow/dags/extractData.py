@@ -9,13 +9,14 @@ from urllib.request import urlopen
 
 # [START default_args]
 default_args = {
-    'owner': 'Otávio Faria',
-    'depends_on_past': False,
-    'email': ['otavio.faria@alphabot.com.br'],
-    'email_on_failure': True,
-    'email_on_retry': False,
-    'retries': 3,
-    'retry_delay': timedelta(minutes=5)}
+  'owner': 'Otávio Faria',
+  'depends_on_past': False,
+  'email': ['otavio.faria@alphabot.com.br'],
+  'email_on_failure': True,
+  'email_on_retry': False,
+  'retries': 3,
+  'retry_delay': timedelta(minutes=5)
+}
 # [END default_args]
 
 # [START env_variables]
@@ -25,17 +26,18 @@ SECRET_ACCESS = getenv("SECRET_KEY", "YOURSECRETKEY")
 
 # [START instantiate_dag]
 dag = DAG(
-    'extract-data',
-    default_args=default_args,
-    start_date=datetime(2022, 1, 24),
-    schedule_interval='@day',
-    tags=['extract', 'inbound', 'S3'])
+  'extract-data',
+  default_args=default_args,
+  start_date=datetime(2022, 1, 24),
+  schedule_interval='@day',
+  tags=['extract', 'inbound', 'S3']
+)
 # [END instantiate_dag]
 
 # [START functions]
 def get_data_yahoo_finances():
 	tickers = [
-		'AAPL',
+	  'AAPL',
 		'VALE',
 	]
 		
@@ -70,6 +72,7 @@ def get_data_yahoo_finances():
 extract_data_yahoo_finances = PythonOperator(
 	task_id='extract_data_yahoo_finances',
 	python_callable=get_data_yahoo_finances,
-	dag=dag)
+	dag=dag
+)
 	
 [extract_data_yahoo_finances]
