@@ -13,8 +13,7 @@ default_args = {
   'email': ['otavio.faria@alphabot.com.br'],
   'email_on_failure': True,
   'email_on_retry': False,
-  'retries': 3,
-  'retry_delay': timedelta(minutes=5)
+  'retries': 3
 }
 # [END default_args]
 
@@ -22,7 +21,7 @@ default_args = {
 dag = DAG(
   'extract-data',
   default_args=default_args,
-  start_date=datetime(2022, 1, 24),
+  start_date=datetime(2021, 3, 18),
   schedule_interval='@weekly',
   tags=['extract', 'inbound', 'S3']
 )
@@ -47,10 +46,6 @@ def get_data_yahoo_finances():
 		
   bucket_name = "yahoo-finances-bg"
 
-  session = boto3.Session(
-    aws_access_key_id=ACCESS_KEY,
-    aws_secret_access_key=SECRET_ACCESS
-  )
   s3 = boto3.resource( 's3', aws_access_key_id=ACCESS_KEY, aws_secret_access_key=SECRET_ACCESS)
   bucket_name = "yahoo-finances-bg"
 
