@@ -5,6 +5,7 @@ import boto3
 from datetime import datetime
 from urllib.request import urlopen
 import os
+from airflow.operators.python_operator import PythonOperator
 # [END import_module]
 
 # [START default_args]
