@@ -23,7 +23,7 @@ dag = DAG(
   'extract-data',
   default_args=default_args,
   start_date=datetime(2022, 1, 24),
-  schedule_interval='@weekly',
+  schedule_interval='@day',
   tags=['extract', 'inbound', 'S3']
 )
 # [END instantiate_dag]
