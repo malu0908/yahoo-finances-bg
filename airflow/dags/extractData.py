@@ -73,16 +73,8 @@ def get_data_yahoo_finances():
     s3.Object(bucket_name=bucket_name, key=f'{folder_name}/finances_{ticker}_{datetime.now().day}.csv').put(Body=bytes_to_write)
 # [END functions]
 
-t1 = BashOperator(
-  task_id='print_date',
-  bash_command='date',
-  dag=dag
-)
-
 extract_data_yahoo_finances = PythonOperator(
   task_id='extract_data_yahoo_finances',
   python_callable=get_data_yahoo_finances,
   dag=dag
 )
-
-t1 >> [extract_data_yahoo_finances]
