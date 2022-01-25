@@ -46,7 +46,7 @@ def get_data_yahoo_finances():
 		aws_access_key_id=ACCESS_KEY,
 		aws_secret_access_key=SECRET_ACCESS
 	)
-	s3 = boto3.resource( 's3', aws_access_key_id=config.aws_access_key_id, aws_secret_access_key=config.aws_secret_access_key)
+	s3 = boto3.resource( 's3', aws_access_key_id=ACCESS_KEY, aws_secret_access_key=SECRET_ACCESS)
 	bucket_name = "yahoo-finances-bg"
 
 	for ticker in tickers:
