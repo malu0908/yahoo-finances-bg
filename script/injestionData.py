@@ -1,6 +1,5 @@
 import pandas as pd
 import config
-import boto3 as boto3
 import s3fs
 from datetime import datetime
 from urllib.request import urlopen
